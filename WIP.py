@@ -5,18 +5,22 @@ class World:
         self.memoryList = []
         self.tutorialship = Ship()
         thread = Interactable(("green thread", "green", "thread", "wall", "bright green"), self.tutorialship.room1, "A vine spills forth in a pile of rubble.\nYou remember that this room used to bustle.\nNot anymore. In fact, the exit doors are shut.\n\"Remember\" is bound to \"rocket.\"")
-        vine = Interactable(("vine", "vines", "ivy"), self.tutorialship.room1, "asdf")
+        vine = Interactable(("vine", "vines", "ivy"), self.tutorialship.room1, "The vine has unassumingly breached\nyour bunker. You're merely irritated\nuntil you realize there's a trickle\nof water, too. It looks dreadful.")
+        door = Interactable(("door", "exit", "doors", "exit doors", "exit door"), self.tutorialship.room1, "Sharp, green-stenciled warnings decorate\nthe blast doors, vivid orange on slate.\n\"CAUTION: Do not exit during interception\nsequence. Do not press override button.\"")
+        button = Interactable(("button", "override", "override button"), self.tutorialship.room1, "The override button was installed to let\npeople escape death by starvation. Bet\nthey'd die faster outside, though, from\nradiation leaking from a shot-down bomb.")
         door_mem = Memory(("door", "exit", "doors", "exit doors", "exit door"), "The blast doors are, somewhow, secure.\nThey were originally meant to ensure\nthat nobody got in. It seems that you're\nnot getting out - of that you're sure.")
         room_mem = Memory(("bustle", "room", "here"), "This room used to be constantly busy - \npeople used to be in and out constantly,\nchecking your vitals, diagnosing, tweaking,\nand always, constantly, worrying, fretting.")
         meta_mem = Memory(("rocket", "december", "memory"), "You don't know why you think the way\nthat you do - you associate the array\nof things that you do with strange words.\nYou blame the hordes of clipboard nerds.")
         nerd_mem = Memory(("nerds", "hordes", "nerd", "horde", "clipboard", "clipboards"), "They built you, you know. They put you\ntogether, bit by bit, screw by screw.\nI would know - I was one of the nerds\nthat threw you together from broken words.")
-        for memory in (door_mem, meta_mem, nerd_mem, room_mem):
+        health_mem = Memory(("vitals", "diagnosis", "prognosis", "health"), "The technicians swarmed over you busily\nbecause you were meant to do more than me.\nYour diagnosis was fine - a healthy state -\nnear optimal intercept and retaliate rate.")
+        bomb_mem = Memory(("rocket", "bomb", "intercept", "interception", "purpose", "job"), "You brought the rockets down, you know;\nyou made tactical decisions: counted ammo,\narmed countermeasures, carefully guided\nshots. And then you retaliated.")
+        for memory in (door_mem, meta_mem, nerd_mem, room_mem, health_mem, bomb_mem):
             self.memoryList.append(memory)
 
         self.player1 = Player(self)
         self.player1.location = self.tutorialship.room1
-        self.player1.location.objectList.append(vine)
-        self.player1.location.objectList.append(thread)
+        for object in (vine, thread, door, button):
+            self.player1.location.objectList.append(object)
 
 class Ship:
     def __init__(self):
