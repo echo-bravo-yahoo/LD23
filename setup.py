@@ -10,4 +10,4 @@ def custom_inputParse():
     return c
 print("Hello. You don't wake up; you come to.\nThat's an important distinction to you.\nYou should look around. You remember\nthat \"look\" is bound to \"December.\"")
 while(True):
-    print("\"{}\"".format(world1.player1.act(custom_inputParse()).rstrip()))
+    print(world1.player1.act(custom_inputParse()).rstrip())

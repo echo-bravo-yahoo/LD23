@@ -14,7 +14,8 @@ class World:
         nerd_mem = Memory(("nerds", "hordes", "nerd", "horde", "clipboard", "clipboards"), "They built you, you know. They put you\ntogether, bit by bit, screw by screw.\nI would know - I was one of the nerds\nthat threw you together from broken words.")
         health_mem = Memory(("vitals", "diagnosis", "prognosis", "health"), "The technicians swarmed over you busily\nbecause you were meant to do more than me.\nYour diagnosis was fine - a healthy state -\nnear optimal intercept and retaliate rate.")
         bomb_mem = Memory(("rocket", "bomb", "intercept", "interception", "purpose", "job"), "You brought the rockets down, you know;\nyou made tactical decisions: counted ammo,\narmed countermeasures, carefully guided\nshots. And then you retaliated.")
-        for memory in (door_mem, meta_mem, nerd_mem, room_mem, health_mem, bomb_mem):
+        retaliation_mem = Memory(("retaliated", "retaliation", "retaliate"), "Oh dear. You remember ending the world.")
+        for memory in (door_mem, meta_mem, nerd_mem, room_mem, health_mem, bomb_mem, retaliation_mem):
             self.memoryList.append(memory)
 
         self.player1 = Player(self)
