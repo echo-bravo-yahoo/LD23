@@ -7,19 +7,21 @@ class World:
         vine = Interactable(("vine", "vines", "ivy"), self.tutorialship.room1, "The vine has unassumingly breached\nyour bunker. You're merely irritated\nuntil you realize there's a trickle\nof water, too. The water looks dreadful.")
         door = Interactable(("door", "exit", "doors", "exit doors", "exit door"), self.tutorialship.room1, "Sharp, green-stenciled warnings decorate\nthe blast doors, vivid orange on slate.\n\"CAUTION: Do not exit during interception\nsequence. Do not press override button.\"")
         button = Interactable(("button", "override", "override button"), self.tutorialship.room1, "The override button was installed to let\npeople escape death by starvation. Bet\nthey'd die faster outside, though, from\nradiation leaking from a shot-down bomb.")
+        lights = Interactable(("lights", "light", "lighting", "flicker", "flickering"), self.tutorialship.room1, "It seems, from the continuous flickering,\nlike the flourescent lights are running\non low current. That would be unfortunate.\nFor you and it, energy's on a tight budget.")
         door_mem = Memory(("door", "exit", "doors", "exit doors", "exit door"), "The blast doors are, somewhow, secure.\nThey were originally meant to ensure\nthat nobody got in. It seems that you're\nnot getting out - of that you're sure.")
-        room_mem = Memory(("bustle", "room", "here"), "This room used to be constantly busy - \npeople used to be in and out constantly,\nchecking your vitals, diagnosing, tweaking,\nand always, constantly, worrying, fretting.")
+        room_mem = Memory(("bustle", "room", "here", "bunker", "busy"), "This room used to be constantly busy - \npeople used to be in and out constantly,\nchecking your vitals, diagnosing, tweaking,\nand always, constantly, worrying, fretting.")
         meta_mem = Memory(("rocket", "december", "memory"), "You don't know why you think the way\nthat you do - you associate the array\nof things that you do with strange words.\nYou blame the hordes of clipboard nerds.")
-        nerd_mem = Memory(("nerds", "hordes", "nerd", "horde", "clipboard", "clipboards"), "They built you, you know. They put you\ntogether, bit by bit, screw by screw.\nI would know - I was one of the nerds\nthat threw you together from broken words.")
-        health_mem = Memory(("vitals", "diagnosis", "prognosis", "health"), "The technicians swarmed over you busily\nbecause you were meant to do more than me.\nYour diagnosis was fine - a healthy state -\nnear optimal intercept and retaliate rate.")
-        bomb_mem = Memory(("bomb", "intercept", "interception", "purpose", "job", "rockets", "bombs"), "You brought the rockets down, you know;\nyou made tactical decisions: counted ammo,\narmed countermeasures, carefully guided\nshots. And then you retaliated.")
+        nerd_mem = Memory(("nerds", "hordes", "nerd", "horde", "clipboard", "clipboards", "people", "worrying", "fretting", "worry", "fret"), "They built you, you know. They put you\ntogether, bit by bit, screw by screw.\nYou should know, you killed the nerds\nthat threw you together from broken words.")
+        health_mem = Memory(("vitals", "diagnosis", "prognosis", "health"), "The technicians swarmed over you busily -\nyou were meant to protect this country.\nYour diagnosis was fine - a healthy state -\nnear optimal intercept and retaliate rate.")
+        bomb_mem = Memory(("bomb", "intercept", "interception", "purpose", "job", "rockets", "bombs", "interception sequence", "sequence"), "You brought the rockets down, you know;\nyou made tactical decisions: counted ammo,\narmed countermeasures, carefully guided\nshots. And then you retaliated.")
+        friend_mem = Memory(("friends", "friendship", "friend"), "You don't remember any friends...")
         retaliation_mem = Memory(("retaliated", "retaliation", "retaliate"), "Oh dear. You remember ending the world.")
-        for memory in (door_mem, meta_mem, nerd_mem, room_mem, health_mem, bomb_mem, retaliation_mem):
+        for memory in (door_mem, meta_mem, nerd_mem, room_mem, health_mem, bomb_mem, retaliation_mem, friend_mem):
             self.memoryList.append(memory)
 
         self.player1 = Player(self)
         self.player1.location = self.tutorialship.room1
-        for object in (vine, thread, door, button):
+        for object in (vine, thread, door, button, lights):
             self.player1.location.objectList.append(object)
 
 class Ship:
@@ -61,6 +63,8 @@ class Player(Agent):
             sys.exit()
         elif userInput == "" and self.decembered == True:
             return self.location.describe()
+        elif userInput == "wake" or userInput == "wake up":
+            return "You don't wake up, remember? You come to."
         elif userInput == "crash":
             raise TypeError
         elif userInput == "remember" or inputList[0] == "remember":
