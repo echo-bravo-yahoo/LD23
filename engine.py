@@ -1,6 +1,4 @@
 import sys
-#global decembered
-#decembered = False
 class World:
     def __init__(self):
         self.memoryList = []
