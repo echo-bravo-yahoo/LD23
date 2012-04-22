@@ -1,11 +1,12 @@
 import sys
-
+#global decembered
+#decembered = False
 class World:
     def __init__(self):
         self.memoryList = []
         self.tutorialship = Ship()
-        thread = Interactable(("green thread", "green", "thread", "wall", "bright green"), self.tutorialship.room1, "A vine spills forth in a pile of rubble.\nYou remember that this room used to bustle.\nNot anymore. In fact, the exit doors are shut.\n\"Remember\" is bound to \"rocket.\"")
-        vine = Interactable(("vine", "vines", "ivy"), self.tutorialship.room1, "The vine has unassumingly breached\nyour bunker. You're merely irritated\nuntil you realize there's a trickle\nof water, too. It looks dreadful.")
+        thread = Interactable(("green thread", "green", "thread", "wall", "bright green", "something"), self.tutorialship.room1, "A vine spills forth in a pile of rubble.\nYou remember that this room used to bustle.\nNot anymore. In fact, the exit doors are shut.\n\"Remember\" is bound to \"rocket.\"")
+        vine = Interactable(("vine", "vines", "ivy"), self.tutorialship.room1, "The vine has unassumingly breached\nyour bunker. You're merely irritated\nuntil you realize there's a trickle\nof water, too. The water looks dreadful.")
         door = Interactable(("door", "exit", "doors", "exit doors", "exit door"), self.tutorialship.room1, "Sharp, green-stenciled warnings decorate\nthe blast doors, vivid orange on slate.\n\"CAUTION: Do not exit during interception\nsequence. Do not press override button.\"")
         button = Interactable(("button", "override", "override button"), self.tutorialship.room1, "The override button was installed to let\npeople escape death by starvation. Bet\nthey'd die faster outside, though, from\nradiation leaking from a shot-down bomb.")
         door_mem = Memory(("door", "exit", "doors", "exit doors", "exit door"), "The blast doors are, somewhow, secure.\nThey were originally meant to ensure\nthat nobody got in. It seems that you're\nnot getting out - of that you're sure.")
@@ -13,7 +14,7 @@ class World:
         meta_mem = Memory(("rocket", "december", "memory"), "You don't know why you think the way\nthat you do - you associate the array\nof things that you do with strange words.\nYou blame the hordes of clipboard nerds.")
         nerd_mem = Memory(("nerds", "hordes", "nerd", "horde", "clipboard", "clipboards"), "They built you, you know. They put you\ntogether, bit by bit, screw by screw.\nI would know - I was one of the nerds\nthat threw you together from broken words.")
         health_mem = Memory(("vitals", "diagnosis", "prognosis", "health"), "The technicians swarmed over you busily\nbecause you were meant to do more than me.\nYour diagnosis was fine - a healthy state -\nnear optimal intercept and retaliate rate.")
-        bomb_mem = Memory(("rocket", "bomb", "intercept", "interception", "purpose", "job"), "You brought the rockets down, you know;\nyou made tactical decisions: counted ammo,\narmed countermeasures, carefully guided\nshots. And then you retaliated.")
+        bomb_mem = Memory(("bomb", "intercept", "interception", "purpose", "job", "rockets", "bombs"), "You brought the rockets down, you know;\nyou made tactical decisions: counted ammo,\narmed countermeasures, carefully guided\nshots. And then you retaliated.")
         retaliation_mem = Memory(("retaliated", "retaliation", "retaliate"), "Oh dear. You remember ending the world.")
         for memory in (door_mem, meta_mem, nerd_mem, room_mem, health_mem, bomb_mem, retaliation_mem):
             self.memoryList.append(memory)
@@ -47,18 +48,21 @@ class Agent(Actor):
     def __init__(self):
         pass
     def get(self, target):
-        return "You want to pick up what?"
+        return "You can't pick anything up!"
     def drop(self, target):
-        return "You want to drop what?"
+        return "You have nothing to drop."
 
 class Player(Agent):
     def __init__(self, world):
         self.world = world
+        self.decembered = False
     def act(self, userInput=""):
         userInput = userInput.lower()
         inputList = userInput.split(" ")
         if (inputList[0]=="quit"):
             sys.exit()
+        elif userInput == "" and self.decembered == True:
+            return self.location.describe()
         elif userInput == "crash":
             raise TypeError
         elif userInput == "remember" or inputList[0] == "remember":
@@ -71,6 +75,9 @@ class Player(Agent):
                     return x.description
             return "You don't remember that."
         elif (userInput == "december"):
+            self.decembered = True
+            return self.location.describe()
+        elif inputList[0]=="december" and (inputList[1]=="bunker" or inputList[1]=="room"):
             return self.location.describe()
         elif userInput == "look" or inputList[0] == "look":
             return "You don't know how to \"look\".\nYou do know how to \"December\", however."
@@ -91,7 +98,7 @@ class Player(Agent):
         elif (inputList[0] == "drop"):
             return self.drop(inputList[1])
         else:
-            return "Woopsy! I don't recognize that command."
+            return "You don't understand how to do that."
 
 class Interactable(Actor):
     def __init__(self, name, location, description="A generic object."):
