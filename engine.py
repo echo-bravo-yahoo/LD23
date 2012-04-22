@@ -57,7 +57,7 @@ class Player(Agent):
     def act(self, userInput=""):
         userInput = userInput.lower()
         inputList = userInput.split(" ")
-        if (inputList[0]=="quit"):
+        if (inputList[0]=="quit" or inputList[0]=="exit"):
             sys.exit()
         elif userInput == "" and self.decembered == True:
             return self.location.describe()
