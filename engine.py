@@ -8,14 +8,14 @@ class World:
         door = Interactable(("door", "exit", "doors", "exit doors", "exit door"), self.tutorialship.room1, "Sharp, green-stenciled warnings decorate\nthe blast doors, vivid orange on slate.\n\"CAUTION: Do not exit during interception\nsequence. Do not press override button.\"")
         button = Interactable(("button", "override", "override button"), self.tutorialship.room1, "The override button was installed to let\npeople escape death by starvation. Bet\nthey'd die faster outside, though, from\nradiation leaking from a shot-down bomb.")
         lights = Interactable(("lights", "light", "lighting", "flicker", "flickering"), self.tutorialship.room1, "It seems, from the continuous flickering,\nlike the flourescent lights are running\non low current. That would be unfortunate.\nFor you and it, energy's on a tight budget.")
-        door_mem = Memory(("door", "exit", "doors", "exit doors", "exit door"), "The blast doors are, somewhow, secure.\nThey were originally meant to ensure\nthat nobody got in. It seems that you're\nnot getting out - of that you're sure.")
+        door_mem = Memory(("door", "exit", "doors", "exit doors", "exit door", "blast door", "blast doors"), "The blast doors are, somewhow, secure.\nThey were originally meant to ensure\nthat nobody got in. It seems that you're\nnot getting out - of that you're sure.")
         room_mem = Memory(("bustle", "room", "here", "bunker", "busy"), "This room used to be constantly busy - \npeople used to be in and out constantly,\nchecking your vitals, diagnosing, tweaking,\nand always, constantly, worrying, fretting.")
         meta_mem = Memory(("rocket", "december", "memory"), "You don't know why you think the way\nthat you do - you associate the array\nof things that you do with strange words.\nYou blame the hordes of clipboard nerds.")
-        nerd_mem = Memory(("nerds", "hordes", "nerd", "horde", "clipboard", "clipboards", "people", "worrying", "fretting", "worry", "fret"), "They built you, you know. They put you\ntogether, bit by bit, screw by screw.\nYou should know, you killed the nerds\nthat threw you together from broken words.")
+        nerd_mem = Memory(("nerds", "hordes", "nerd", "horde", "clipboard", "clipboards", "people", "worrying", "fretting", "worry", "fret", "technicans", "technician"), "They built you, you know. They put you\ntogether, bit by bit, screw by screw.\nYou should know, you killed the nerds\nthat threw you together from broken words.")
         health_mem = Memory(("vitals", "diagnosis", "prognosis", "health"), "The technicians swarmed over you busily -\nyou were meant to protect this country.\nYour diagnosis was fine - a healthy state -\nnear optimal intercept and retaliate rate.")
         bomb_mem = Memory(("bomb", "intercept", "interception", "purpose", "job", "rockets", "bombs", "interception sequence", "sequence"), "You brought the rockets down, you know;\nyou made tactical decisions: counted ammo,\narmed countermeasures, carefully guided\nshots. And then you retaliated.")
         friend_mem = Memory(("friends", "friendship", "friend"), "You don't remember any friends...")
-        retaliation_mem = Memory(("retaliated", "retaliation", "retaliate"), "Oh dear. You remember ending the world.")
+        retaliation_mem = Memory(("retaliated", "retaliation", "retaliate", "decision", "decisions"), "Oh dear. You remember ending the world.")
         for memory in (door_mem, meta_mem, nerd_mem, room_mem, health_mem, bomb_mem, retaliation_mem, friend_mem):
             self.memoryList.append(memory)
 
@@ -59,12 +59,16 @@ class Player(Agent):
     def act(self, userInput=""):
         userInput = userInput.lower()
         inputList = userInput.split(" ")
-        if (inputList[0]=="quit" or inputList[0]=="exit"):
+        if (userInput=="quit" or userInput=="exit"):
             sys.exit()
         elif userInput == "" and self.decembered == True:
             return self.location.describe()
+        elif inputList[0] in ("january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november"):
+            return "This module is currently offline."
         elif userInput == "wake" or userInput == "wake up":
             return "You don't wake up, remember? You come to."
+        elif userInput == "come to":
+            return "You've already done that."
         elif userInput == "crash":
             raise TypeError
         elif userInput == "remember" or inputList[0] == "remember":
@@ -79,7 +83,7 @@ class Player(Agent):
         elif (userInput == "december"):
             self.decembered = True
             return self.location.describe()
-        elif inputList[0]=="december" and (inputList[1]=="bunker" or inputList[1]=="room"):
+        elif inputList[0]=="december" and (inputList[1]=="bunker" or inputList[1]=="room" or inputList[1]==""):
             return self.location.describe()
         elif userInput == "look" or inputList[0] == "look":
             return "You don't know how to \"look\".\nYou do know how to \"December\", however."
