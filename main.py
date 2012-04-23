@@ -25,7 +25,13 @@ endErrors = (str(world1.tutorialship.room1), closed(random.randint(0, len(closed
 def endGame():
     for element in endErrors:
         time.sleep(random.randint(10, 100)/1000)
-        print(element)
+        for character in element:
+            try:
+                print(character, end="")
+            except UnicodeEncodeError:
+                pass
+        #print(element)
+        print()
     input()
     sys.exit()
 
