@@ -11,7 +11,10 @@ closedList = ["83.217.163.131", "161.44.130.122", "92.51.187.121", "178.77.160.1
 def randbits():
     temporary = ""
     for x in range(0, random.randint(5, 20)):
-        temporary = temporary + chr(random.getrandbits(8))
+        try:
+            temporary = temporary + chr(random.getrandbits(8))
+        except UnicodeEncodeError:
+            pass
     return temporary
 
 def closed(index):
